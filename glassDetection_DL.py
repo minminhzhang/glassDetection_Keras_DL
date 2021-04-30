@@ -128,7 +128,7 @@ y_test = labels[train_size+val_size:train_size+val_size+test_size,:]
 x_train = x_train.reshape(train_size, 148, 148, 3)
 x_val = x_val.reshape(val_size,148, 148, 3)
 x_test = x_test.reshape(test_size,148, 148, 3)
-train_images_labels = to_categorical(train_images_labels,2)
+y_val = to_categorical(y_val,2)
 y_val = to_categorical(y_val,2)
 y_test = to_categorical(y_test,2)
 
@@ -157,7 +157,7 @@ model.compile(loss=keras.losses.CategoricalCrossentropy(from_logits=True), optim
 callback = tf.keras.callbacks.EarlyStopping(monitor='loss', min_delta=0.02, patience=3)
 
 # hist = model.fit(x=x_train,y=train_images_labels, epochs=30, batch_size=128, validation_data=(x_val, y_val), callbacks=[callback], verbose=1)
-hist = model.fit(x=x_train,y=train_images_labels, epochs=15, batch_size=128, validation_data=(x_val, y_val), verbose=1)
+hist = model.fit(x=x_train,y=y_val, epochs=15, batch_size=128, validation_data=(x_val, y_val), verbose=1)
 
 test_score = model.evaluate(x_test, y_test)
 print("Test loss {:.4f}, accuracy {:.2f}%".format(test_score[0],test_score[1]*100))
